@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Minh Nguyen Portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Pinyon+Script&display=swap">
+<style>
+/* Layout: blue-to-cream hero, cream pages, big script word over tall caps (from the Canva deck). Projects open as pop-ups. */
+:root{
+  --royal:#0F0F6B; --royal-2:#1b1b8f; --cream:#FBF6E8; --cream-2:#F1E9D2; --mist:#B9B8D8; --rust:#C4532D;
+  --ink:#0F0F6B; --ink-soft:#4a4a8a; --line:rgba(15,15,107,.18);
+  --display:'Times New Roman',Times,'Liberation Serif','Nimbus Roman',serif;
+  --script:'Pinyon Script','Snell Roundhand','Brush Script MT',cursive;
+  --body:'Hanken Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font:400 17px/1.6 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto}
+.bleed{margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.tall{font-family:var(--display);text-transform:uppercase;font-weight:500;line-height:.86;letter-spacing:-.02em;display:inline-block;transform:scaleX(.8);transform-origin:left bottom;white-space:nowrap}
+.script{font-family:var(--script);font-weight:400;line-height:1;-webkit-text-stroke:.012em currentColor;paint-order:stroke fill}
+/* sturdier hairlines, like the Canva deck */
+.tall,.toc .nm,.pj h2,.stat b,.chart h4,.slider h4,.sk-grid h3,.facts b,.learned p,.sl-out b{font-optical-sizing:auto}
+.toc .nm,.pj h2,.stat b,.chart h4,.slider h4,.sk-grid h3,.facts b,.sl-out b{font-weight:500}
+
+/* hero */
+.hero{position:relative;color:var(--cream);background:linear-gradient(180deg,#0e0e6a 0%,#0e0e6a 38%,#6d6c9a 68%,#b9b6bd 85%,#f4efd6 100%);padding-block:28px 0;min-height:min(780px,100svh);overflow:hidden}
+.hero::before,.cream::before{content:"";position:absolute;inset:0;background:var(--grain);opacity:.5;mix-blend-mode:soft-light;pointer-events:none}
+.top{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;font-size:15px;position:relative}
+.top a{text-underline-offset:3px}
+.hero-mid{position:relative;text-align:center;padding-block:clamp(60px,14vh,130px) clamp(110px,20vh,220px)}
+.hero .script{font-size:clamp(46px,9vw,104px);display:block;clip-path:inset(0 100% 0 0);animation:draw 1.6s .2s cubic-bezier(.6,0,.2,1) forwards}
+.hero .tall{font-size:clamp(56px,14.5vw,184px);display:block;width:fit-content;margin-left:auto;margin-right:auto;transform-origin:center bottom;margin-top:-.02em;color:#f3ead2}
+.hero .tall span{display:inline-block;opacity:0;transform:translateY(28px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+.hero-note{position:absolute;left:0;right:0;bottom:22px;text-align:center;color:var(--royal);font-size:15px;font-weight:500}
+.hero-note a{text-decoration:none;border-bottom:1.5px solid var(--royal)}
+@keyframes draw{to{clip-path:inset(0 -5% 0 0)}}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* about */
+.cream{position:relative;background:var(--cream)}
+.about{background:linear-gradient(180deg,#FBF6E8 0%,#FBF6E8 45%,#b9b8d8 80%,#0e0e6a 100%);padding-bottom:clamp(150px,20vw,260px)!important}
+.skills{background:linear-gradient(180deg,#FBF6E8 0%,#FBF6E8 55%,#b9b8d8 85%,#1a1a85 100%);padding-bottom:clamp(150px,20vw,260px)!important}
+.about{padding-block:clamp(70px,12vw,140px)}
+.about-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,6vw,80px);align-items:center}
+.portrait{aspect-ratio:4/5;overflow:hidden;background:var(--cream-2)}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:52% 40%;display:block}
+.h-pair{display:grid;grid-template-columns:auto 1fr;align-items:end;column-gap:clamp(14px,3vw,36px);margin-bottom:30px}
+.h-pair .script{grid-column:1/-1;font-size:clamp(56px,8vw,96px);padding-bottom:.12em}
+.h-pair .tall{font-size:clamp(64px,9vw,112px);margin-right:0}
+.dash{height:clamp(10px,1.4vw,16px);width:min(100%,clamp(60px,12vw,170px));background:currentColor;margin-bottom:.4em}
+.about p{margin:0 0 14px;max-width:52ch;font-size:clamp(17px,1.5vw,20px)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:26px;padding:0;list-style:none;font-size:15px}
+.facts li{border-top:1.5px solid var(--royal);padding-top:8px}
+.facts b{display:block;font:400 30px/1 var(--display);margin-bottom:2px}
+
+/* contents */
+.toc-sec{padding-block:clamp(60px,9vw,110px) clamp(170px,22vw,280px);background:linear-gradient(180deg,#0e0e6a 0%,#0e0e6a 82%,#6d6c9a 92%,#FBF6E8 100%);color:var(--cream);position:relative}
+.toc-sec::before{content:"";position:absolute;inset:0;background:var(--grain);opacity:.45;mix-blend-mode:soft-light;pointer-events:none}
+.toc-sec .wrap{position:relative}
+.sec-head{display:grid;grid-template-columns:auto 1fr;align-items:end;column-gap:clamp(14px,3vw,36px);margin-bottom:22px}
+.sec-head .script{grid-column:1/-1;font-size:clamp(46px,7vw,84px);padding-bottom:.1em}
+.sec-head .tall{font-size:clamp(52px,8vw,104px);margin-right:0}
+.lede{max-width:46ch;margin:0 0 40px;font-size:18px;opacity:.9}
+.toc{list-style:none;margin:0;padding:0;border-top:1px solid rgba(251,246,232,.35)}
+.toc li{border-bottom:1px solid rgba(251,246,232,.35)}
+.toc button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.2fr) auto;gap:6px 28px;align-items:baseline;padding:20px 4px;transition:padding .35s cubic-bezier(.2,.7,.2,1),background .3s}
+.toc button:hover,.toc button:focus-visible{padding-left:22px;background:rgba(251,246,232,.07)}
+.toc .nm{font:400 clamp(30px,4.4vw,54px)/1 var(--display);letter-spacing:-.01em}
+.toc .nm small{display:block;font:500 13px/1.4 var(--body);letter-spacing:.08em;text-transform:uppercase;opacity:.7;margin-top:8px}
+.toc .lr{font-size:16px;opacity:.9}
+.toc .lr i{font-style:normal;opacity:.65;display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.toc .go{font-size:14px;white-space:nowrap;border:1px solid rgba(251,246,232,.6);padding:6px 14px;border-radius:99px;transition:background .25s,color .25s}
+.toc button:hover .go{background:var(--cream);color:var(--royal)}
+.group-l{margin:34px 0 10px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+
+/* skills + contact */
+.skills{padding-block:clamp(60px,9vw,110px)}
+.sk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:30px}
+.sk-grid h3{margin:0 0 10px;font:400 26px/1 var(--display);border-bottom:1.5px solid var(--royal);padding-bottom:10px}
+.sk-grid p{margin:0;font-size:16px}
+.contact{background:linear-gradient(180deg,#1a1a85 0%,#0e0e6a 40%,#0e0e6a 100%);color:var(--cream);padding-block:clamp(60px,9vw,110px) 40px;position:relative;overflow:hidden}
+.contact::before{content:"";position:absolute;inset:0;background:var(--grain);opacity:.45;mix-blend-mode:soft-light;pointer-events:none}
+.contact .wrap{position:relative;padding-bottom:20px}
+.contact .sec-head .tall{font-size:clamp(60px,11vw,140px)}
+.contact .sec-head .script{font-size:clamp(48px,7vw,90px)}
+.c-links{display:flex;flex-wrap:wrap;gap:10px 40px;margin-top:34px;font-size:19px}
+.c-links span{opacity:.65;font-size:13px;letter-spacing:.1em;text-transform:uppercase;display:block}
+.c-links a{text-underline-offset:4px}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+
+/* modal */
+dialog.proj{border:0;padding:0;margin:0 0 0 auto;width:min(980px,100%);max-width:100%;height:100dvh;max-height:100dvh;background:var(--cream);color:var(--ink);overflow:auto;box-shadow:-30px 0 80px rgba(8,8,60,.45);animation:slide .5s cubic-bezier(.2,.7,.2,1)}
+dialog.proj::backdrop{background:rgba(8,8,70,.6);backdrop-filter:blur(3px);animation:fade .4s}
+@keyframes slide{from{transform:translateX(60px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.pj{padding:clamp(22px,4vw,48px) max(clamp(20px,4vw,52px),env(safe-area-inset-right,0px)) 70px max(clamp(20px,4vw,52px),env(safe-area-inset-left,0px));position:relative}
+.pj-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:5;background:var(--cream);padding:10px 0;margin-bottom:10px;border-bottom:1px solid var(--line);font-size:14px}
+.pj-bar button,.pj-nav button{all:unset;cursor:pointer;border:1px solid var(--royal);padding:5px 14px;border-radius:99px;font-size:14px}
+.pj-bar button:hover,.pj-nav button:hover{background:var(--royal);color:var(--cream)}
+.pj-bar button:focus-visible,.pj-nav button:focus-visible{outline:2px solid var(--rust)}
+.pj h2{margin:22px 0 4px;font:400 clamp(40px,7vw,78px)/.95 var(--display);letter-spacing:-.015em}
+.pj .role{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:22px}
+.pj .role a{color:var(--ink)}
+.pj .one{font-size:clamp(19px,2vw,23px);line-height:1.45;max-width:36em;margin:0 0 28px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin:0 0 34px}
+.stat{border-top:2px solid var(--royal);padding-top:8px}
+.stat b{font:400 clamp(34px,5vw,52px)/1 var(--display);display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;color:var(--ink-soft);display:block;line-height:1.35;margin-top:4px}
+.blk{margin:0 0 38px}
+.blk h3{font:500 13px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+.blk p{margin:0 0 12px;max-width:62ch}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 36px}
+.two>*{min-width:0}
+.learned{background:var(--royal);color:var(--cream);padding:22px 24px;margin:0 0 38px}
+.learned h3{color:var(--cream);opacity:.7;margin:0 0 8px;font:500 13px/1 var(--body);letter-spacing:.14em;text-transform:uppercase}
+.learned p{margin:0;font:400 clamp(21px,2.4vw,27px)/1.3 var(--display);max-width:34em}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.tags li{border:1px solid var(--royal);border-radius:99px;padding:3px 13px;font-size:14px}
+.fig{margin:0}
+.fig img{width:100%;display:block}
+.fig figcaption{font-size:13px;color:var(--ink-soft);margin-top:6px}
+.photo{aspect-ratio:3/2;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* charts */
+.chart{margin:0 0 38px}
+.chart h4{margin:0 0 4px;font:400 24px/1.15 var(--display)}
+.chart .sub{font-size:14px;color:var(--ink-soft);margin:0 0 14px;max-width:60ch}
+.hb{display:grid;grid-template-columns:minmax(90px,150px) minmax(0,1fr) 54px;gap:8px 12px;align-items:center;font-size:15px}
+.hb .lab{line-height:1.25}.hb .lab small{display:block;color:var(--ink-soft);font-size:12px}
+.hb .track{height:20px;background:rgba(15,15,107,.07);position:relative}
+.hb .bar{position:absolute;inset:0 auto 0 0;width:0;background:var(--royal);border-radius:0 4px 4px 0;transition:width 1s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.hb .bar.hot{background:var(--rust)}.hb .bar.dim{background:var(--mist)}
+.hb .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.readout{font-size:14px;min-height:22px;color:var(--ink-soft);margin-top:8px}
+.readout b{color:var(--ink)}
+svg.ch{width:100%;height:auto;display:block;overflow:visible}
+svg.ch text{font:12px var(--body);fill:var(--ink-soft)}
+svg.ch .gl{stroke:var(--line);stroke-width:1}
+svg.ch rect.b{transition:height .9s cubic-bezier(.2,.7,.2,1),y .9s cubic-bezier(.2,.7,.2,1);cursor:pointer}
+svg.ch rect.b:hover,svg.ch rect.b:focus{opacity:.8;outline:none}
+.legend{display:flex;gap:6px 18px;flex-wrap:wrap;font-size:13px;margin:0 0 10px;color:var(--ink-soft)}
+.legend i{display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px}
+.note{font-size:13.5px;color:var(--ink-soft);border-left:3px solid var(--royal);padding:2px 0 2px 12px;max-width:62ch;margin:0 0 12px}
+.slider{border:1.5px solid var(--royal);padding:20px 22px;margin:0 0 38px;background:var(--cream-2)}
+.slider h4{margin:0 0 4px;font:400 24px/1.15 var(--display)}
+.slider label{display:flex;justify-content:space-between;font-weight:600;margin:14px 0 6px}
+.slider input[type=range]{width:100%;accent-color:var(--royal);height:28px}
+.sl-out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:10px}
+.sl-out b{font:400 34px/1 var(--display);display:block;font-variant-numeric:tabular-nums}
+.sl-out span{font-size:13px;color:var(--ink-soft)}
+pre.code{background:var(--royal);color:#efe9d6;padding:18px 20px;margin:0;font:13px/1.55 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto;tab-size:4}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:0 0 14px;padding:0;list-style:none}
+.flow li{border:1.5px solid var(--royal);padding:8px 14px;font-size:14.5px;position:relative;flex:1 1 130px;min-width:0}
+.flow li+li::before{content:"→";position:absolute;left:-17px;top:50%;transform:translateY(-52%);font-size:16px}
+.flow li{margin-left:10px}.flow li:first-child{margin-left:0}
+.flow-l{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:16px 0 8px}
+table.t{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
+table.t th,table.t td{text-align:left;padding:8px 12px 8px 0;border-bottom:1px solid var(--line)}
+table.t th{font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+table.t tr.tg td{color:var(--rust);font-weight:600}
+.scroll-x{overflow-x:auto}
+.pj-nav{display:flex;justify-content:space-between;gap:10px;margin-top:40px;padding-top:18px;border-top:1px solid var(--line)}
+
+@media (max-width:820px){
+  .about-grid{grid-template-columns:1fr}.portrait{aspect-ratio:4/3;max-width:420px}
+  .toc button{grid-template-columns:minmax(0,1fr) auto}.toc .lr{grid-column:1/-1;order:3}
+  .sk-grid,.two{grid-template-columns:1fr}
+  .sl-out{grid-template-columns:1fr 1fr}
+  .hb{grid-template-columns:minmax(80px,110px) minmax(0,1fr) 46px}
+  .hero{min-height:560px}.hero-note{padding:0 16px}
+  .hero-mid{padding-bottom:150px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero .script{animation:none;clip-path:none}.hero .tall span{animation:none;opacity:1;transform:none}
+  .js .rv{opacity:1;transform:none;transition:none}
+  dialog.proj,dialog.proj::backdrop{animation:none}
+  .hb .bar,svg.ch rect.b{transition:none}
+}
+</style>
+
+<header class="hero bleed" id="top">
+  <div class="wrap">
+    <nav class="top" aria-label="Contact">
+      <a href="https://www.linkedin.com/in/minh-nguyen-ahihi/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/mmiinnhh045-sketch?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:minhnguy.0405@gmail.com">minhnguy.0405@gmail.com</a>
+      <a href="tel:+16562122844">+1 (656) 212 2844</a>
+    </nav>
+    <div class="hero-mid">
+      <span class="script">Minh Nguyen</span>
+      <h1 class="tall" aria-label="Portfolio" style="margin-top:0;margin-bottom:0"><span style="animation-delay:.9s">P</span><span style="animation-delay:.96s">O</span><span style="animation-delay:1.02s">R</span><span style="animation-delay:1.08s">T</span><span style="animation-delay:1.14s">F</span><span style="animation-delay:1.2s">O</span><span style="animation-delay:1.26s">L</span><span style="animation-delay:1.32s">I</span><span style="animation-delay:1.38s">O</span></h1>
+    </div>
+    <p class="hero-note">Data, automation and marketing analytics. <a href="#work">See what I've delivered</a></p>
+  </div>
+</header>
+
+<main>
+<section class="cream about bleed" id="about">
+  <div class="wrap about-grid">
+    <div class="portrait rv"><img src="images/portrait.jpg" alt="Portrait of Minh Nguyen" width="900" height="1200"></div>
+    <div>
+      <div class="h-pair rv"><span class="script">About</span><span class="tall">ME</span><span class="dash"></span></div>
+      <div class="rv" style="--d:.1s">
+        <p>I'm a senior at the University of South Florida, studying AI and Business Analytics with a marketing minor.</p>
+        <p>I like the unglamorous part of data. Cleaning it, automating it, and then making it easy to read. I've done that for an investment firm, a startup and two research projects.</p>
+        <p>Outside class I eat well, take photos and talk too long. Coffee chat?</p>
+      </div>
+      <ul class="facts rv" style="--d:.2s">
+        <li><b>3.75</b>GPA</li>
+        <li><b>May 2027</b>graduating</li>
+        <li><b>Tampa, FL</b>open to relocate</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="toc-sec bleed" id="work">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="script">What I've</span><span class="tall">Delivered</span><span class="dash"></span></div>
+    <p class="lede rv">Seven things I've learned from and shipped so far. Pick one to open it.</p>
+
+    <p class="group-l">Work</p>
+    <ul class="toc" id="toc-work"></ul>
+    <p class="group-l">School and leadership</p>
+    <ul class="toc" id="toc-school"></ul>
+  </div>
+</section>
+
+<section class="cream skills bleed" id="skills">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="script">What I</span><span class="tall">Use</span><span class="dash"></span></div>
+    <div class="sk-grid">
+      <div class="rv"><h3>Data</h3><p>Python, SQL, Tableau, Excel, RStudio. Web scraping with Playwright. Data cleaning, K-means, dashboards.</p></div>
+      <div class="rv" style="--d:.08s"><h3>Marketing and strategy</h3><p>A/B testing, LinkedIn analytics, user interviews, competitor benchmarks, go-to-market plans, Mintel.</p></div>
+      <div class="rv" style="--d:.16s"><h3>Everyday</h3><p>Claude, ChatGPT, NotebookLM, Google AI Studio, Lucidchart, Figma, Canva, Slack, Microsoft 365, Google Workspace.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="contact bleed" id="contact">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="script">Let's talk</span><span class="tall">Contact</span><span class="dash"></span></div>
+    <div class="c-links rv">
+      <div><span>Email</span><a href="mailto:minhnguy.0405@gmail.com">minhnguy.0405@gmail.com</a></div>
+      <div><span>LinkedIn</span><a href="https://www.linkedin.com/in/minh-nguyen-ahihi/" target="_blank" rel="noopener">minh-nguyen-ahihi</a></div>
+      <div><span>GitHub</span><a href="https://github.com/mmiinnhh045-sketch?tab=repositories" target="_blank" rel="noopener">mmiinnhh045-sketch</a></div>
+      <div><span>Phone</span><a href="tel:+16562122844">+1 (656) 212 2844</a></div>
+    </div>
+  </div>
+</footer>
+
+<dialog class="proj" id="dlg" aria-label="Project details"><div class="pj" id="pj"></div></dialog>
+
+<script>
+document.documentElement.classList.add('js');
+const IMG={ama:"images/ama.jpg",ow1:"images/ow-1.jpg",ow2:"images/ow-2.jpg"};
+
+/* ---------- data (all from the real files) ---------- */
+const HNX_YEARS=[[2016,226],[2017,240],[2018,259],[2019,196],[2020,210],[2021,224],[2022,283],[2023,220],[2024,221],[2025,198],[2026,142]];
+const HNX_TERM=[['3 yr',75],['5 yr',506],['7 yr',154],['10 yr',595],['15 yr',600],['20 yr',191],['30 yr',298]];
+const KAT_Q=[[2019,[5.81,6.54,6.94,6.64]],[2020,[7.98,5.92,9.14,8.22]],[2021,[9.95,11.39,9.97,12.07]]];
+const KAT_CAT=[['Materials Processing',47.53],['Govt, R&D, other',25.30],['Telecom',20.52],['Medical',7.22]];
+const KAT_DIV=[['Germany',44.50],['United States',36.19],['United Kingdom',8.53],['India',4.82],['Russia',4.19],['Korea',2.34]];
+const KAT_CUST=[['The Fly Co.',6.08],['The Montpelier Corp.',4.98],['The Arizona Company',2.19],['The Elephant Company',1.36],['A.G. Montpelier Inc.',1.09]];
+const CH_CONTRACT=[['Month-to-month',42.7,3875],['One year',11.3,1473],['Two year',2.8,1695]];
+const CH_TENURE=[['0 to 12 months',47.4,2186],['13 to 24',28.7,1024],['25 to 48',20.4,1594],['49+',9.5,2239]];
+const CH_PAY=[['Electronic check',45.3,2365],['Mailed check',19.1,1612],['Bank transfer (auto)',16.7,1544],['Credit card (auto)',15.2,1522]];
+const CH_TECH=[['0 tickets',19.7,6073],['1 ticket',65.6,256],['2 tickets',62.7,201],['3+ tickets',73.9,513]];
+const SEG={n:1994,churned:1024,activeMonthly:47785.05,churnerAvg:66.70};
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const hb=(rows,{max,fmt=v=>v+'%',hot=-1,dim=[]}={})=>{
+  max=max||Math.max(...rows.map(r=>r[1]));
+  return `<div class="hb">`+rows.map((r,i)=>`<div class="lab">${r[0]}${r[2]!=null?`<small>n = ${r[2].toLocaleString()}</small>`:''}</div><div class="track"><div class="bar ${i===hot?'hot':''} ${dim.includes(i)?'dim':''}" data-w="${(r[1]/max*100).toFixed(1)}" style="--d:${i*.06}s"></div></div><div class="val">${fmt(r[1])}</div>`).join('')+`</div>`;
+};
+const stats=a=>`<div class="stats">`+a.map(s=>`<div class="stat"><b data-n="${s[0]}" data-s="${s[2]||''}" data-p="${s[3]||''}">${s[3]||''}${s[0]}${s[2]||''}</b><span>${s[1]}</span></div>`).join('')+`</div>`;
+const learned=t=>`<div class="learned"><h3>What I learned</h3><p>${t}</p></div>`;
+const chart=(t,sub,body,extra='')=>`<div class="chart"><h4>${t}</h4><p class="sub">${sub}</p>${body}${extra}</div>`;
+
+function colChart(id,groups,{unit='$M',w=640,h=250}={}){
+  const all=groups.flatMap(g=>g[1]),mx=Math.ceil(Math.max(...all)/2)*2;
+  const L=34,B=h-34,T=14,gw=(w-L)/groups.length,bw=gw/4-6;
+  let s=`<svg class="ch" id="${id}" viewBox="0 0 ${w} ${h}" role="img" aria-label="Quarterly revenue, 2019 to 2021">`;
+  for(let t=0;t<=mx;t+=mx/4){const y=B-(B-T)*t/mx;s+=`<line class="gl" x1="${L}" x2="${w}" y1="${y}" y2="${y}"/><text x="${L-6}" y="${y+4}" text-anchor="end">${t}</text>`}
+  groups.forEach((g,gi)=>{
+    const top=Math.max(...g[1]);
+    g[1].forEach((v,qi)=>{
+      const x=L+gi*gw+qi*(gw/4)+3,bh=(B-T)*v/mx,isTop=v===top;
+      s+=`<rect class="b" tabindex="0" x="${x}" width="${bw+3}" y="${B}" height="0" data-y="${B-bh}" data-h="${bh}" fill="${isTop?'var(--rust)':'var(--royal)'}" rx="2" data-t="${g[0]} Q${qi+1}: $${v.toFixed(2)}M${isTop?' (peak quarter that year)':''}"/>`;
+      s+=`<text x="${x+(bw+3)/2}" y="${B+15}" text-anchor="middle">Q${qi+1}</text>`;
+    });
+    s+=`<text x="${L+gi*gw+gw/2}" y="${B+30}" text-anchor="middle" style="font-weight:600;fill:var(--ink)">${g[0]}</text>`;
+  });
+  return s+`</svg><div class="readout" id="${id}-r">Hover or tab to a bar. Orange is each year's biggest quarter.</div>`;
+}
+function erd(){
+  const T=[
+   {n:'Customer',x:10,y:10,f:['CustomerID  PK','FirstName','LastName','Email  UNIQUE','Phone']},
+   {n:'Order',x:260,y:10,f:['OrderID  PK','OrderDate','TotalAmount','CustomerID  FK']},
+   {n:'OrderDetail',x:260,y:170,f:['OrderDetailID  PK','OrderID  FK','ProductID  FK','Quantity','UnitPrice']},
+   {n:'Product',x:510,y:170,f:['ProductID  PK','ProductName','Category','Price']}];
+  let s=`<svg class="ch" viewBox="0 0 720 330" role="img" aria-label="TechKart entity relationship diagram">`;
+  const line=(a,b,c,d)=>`<path d="M${a} ${b} L${c} ${d}" stroke="var(--royal)" stroke-width="1.5" fill="none"/>`;
+  s+=line(190,50,260,50)+line(380,125,380,170)+line(500,235,510,235);
+  s+=`<text x="198" y="42">1</text><text x="240" y="42">N</text><text x="386" y="146">1</text><text x="386" y="166">N</text><text x="488" y="226">N</text><text x="513" y="226" dx="0">1</text>`;
+  T.forEach(t=>{const h=28+t.f.length*22;
+    s+=`<rect x="${t.x}" y="${t.y}" width="180" height="${h}" fill="var(--cream)" stroke="var(--royal)" stroke-width="1.5"/><rect x="${t.x}" y="${t.y}" width="180" height="28" fill="var(--royal)"/><text x="${t.x+10}" y="${t.y+19}" style="fill:var(--cream);font-weight:600;font-size:13px">${t.n}</text>`;
+    t.f.forEach((f,i)=>s+=`<text x="${t.x+10}" y="${t.y+46+i*22}" style="fill:var(--ink)">${f}</text>`);});
+  return s+`</svg>`;
+}
+
+/* ---------- projects ---------- */
+const P=[
+{id:'eastspring',g:'work',name:'Eastspring Investments',role:'Data & Automation Intern',when:'Jun to Aug 2026',place:'Ho Chi Minh, Vietnam',link:['eastspring.com','https://www.eastspring.com'],
+ learn:'Automate the boring part',tag:'Python, automation, web scraping',
+ html:()=>`
+  <p class="one">I took a pile of manual market data pulls and turned them into one script. Then I built a scraper for Vietnamese government bond auctions.</p>
+  ${stats([[90,'less request volume after rebuilding the pulls','%+'],[27,'Excel worksheets refreshed by script'],[2419,'bond auction records scraped'],[790,'unique bond codes']])}
+  ${learned('Fix the process first, then write the code. Cutting 250+ requests to a handful mattered more than the script that ran them.')}
+  <div class="blk"><h3>Job 1: the manual refresh</h3>
+   <p>Every report needed 250+ separate data requests, run by hand across 27 worksheets covering 14 countries. I grouped them into array-based queries, which cut request volume by more than 90%. A Python script (win32com) and VBA now refresh each sheet and save a static, paste-value copy.</p>
+   <ul class="flow"><li>Market data terminal</li><li>Array queries</li><li>Python + VBA refresh</li><li>Static exports</li></ul></div>
+  <div class="blk"><h3>Job 2: HNX bond auction scraper</h3>
+   <p>The HNX site shows results one page at a time and writes numbers the Vietnamese way (dots for thousands, commas for decimals). I used Playwright to page through everything, fixed the number format, and wrote a clean Excel table. A second script only adds auctions newer than the last saved date.</p>
+   <ul class="flow"><li>HNX auction site</li><li>Playwright scraper</li><li>Excel database</li><li>Scheduled update</li></ul></div>
+  ${chart('Auctions per year in the dataset','Rows scraped by issue year. 2026 runs to 30 July.',hb(HNX_YEARS.map(r=>[r[0],r[1]]),{fmt:v=>v,hot:10,max:300}))}
+  ${chart('Which terms get auctioned','The 15, 10 and 5 year bonds make up most of the 2,419 rows.',hb(HNX_TERM,{fmt:v=>v,hot:4,max:650}))}
+  <div class="blk"><h3>The fiddly bit</h3><pre class="code">def convert_vn_number(series):
+    """'.' is thousands, ',' is decimal in VN format."""
+    cleaned = (
+        series.astype(str).str.strip()
+        .replace({"": None, "nan": None, "-": None})
+        .str.replace(".", "", regex=False)
+        .str.replace(",", ".", regex=False)
+    )
+    return pd.to_numeric(cleaned, errors="coerce")</pre></div>
+  <div class="blk"><h3>Also</h3><p>Cleaned ad hoc datasets (FDI, market data) into Excel reports and charts, often on short notice from the investment team.</p></div>`},
+
+{id:'onlyworks',g:'work',name:'OnlyWorks',role:'Marketing Specialist Intern',when:'Jan to Aug 2026',place:'Remote',link:['only-works.com','https://only-works.com/about'],
+ learn:'Test one thing at a time',tag:'A/B testing, LinkedIn, user research',
+ html:()=>`
+  <p class="one">OnlyWorks is an early-stage hiring startup. I ran their LinkedIn experiments, interviewed users and helped plan a hackathon launch.</p>
+  ${stats([[6,'LinkedIn A/B tests'],[9,'user interviews'],[4,'reusable post templates'],[512,'builder cap for OnlyHacks \'26']])}
+  ${learned('Small audiences give loud-looking numbers. I learned to write down a win rule before the test, not after.')}
+  <div class="blk"><h3>How the tests worked</h3>
+   <p><b>Win rule.</b> A version only wins if it beats the other by 20% or more. Otherwise it's a tie.</p>
+   <p><b>One variable.</b> Inside a pair, the post body stays the same. Only the hook or tone changes.</p>
+   <p><b>Rotate days.</b> The better posting day switches between versions each week.</p></div>
+  ${chart('Engagement rate by hook type','Average engagement rate per post (likes and comments over impressions). Orange is a single post, so treat it as a hint, not a result.',hb([['Breakdown',6.08,1],['Insight',3.10,1],['Story',2.71,2],['Statement',1.45,2],['Question',1.22,2]].map(r=>[r[0],r[1],null]),{fmt:v=>v.toFixed(1)+'%',hot:0,max:6.5}).replace(/<small>.*?<\/small>/g,''),`<p class="readout">Posts per hook: Breakdown 1, Insight 1, Story 2, Statement 2, Question 2. Impressions ran from 205 to 680 a post.</p>`)}
+  <div class="blk"><h3>Scroll-stop analysis</h3><p>I studied 10 top LinkedIn posts and turned what they had in common into 4 templates the team could reuse.</p></div>
+  <div class="blk"><h3>Talking to users</h3>
+   <p>I interviewed 9 job seekers and tagged each one (hook quote, pain point, vision). A few things came up again and again:</p>
+   <div class="scroll-x"><table class="t"><tr><th>Heard</th><th>What I suggested</th></tr>
+   <tr><td>Speed matters more than features</td><td>Treat load time as a retention feature</td></tr>
+   <tr><td>Apply within 24 hours of posting</td><td>A "hot lead" alert</td></tr>
+   <tr><td>Projects beat coursework</td><td>An automatic proof-of-work portfolio</td></tr>
+   <tr><td>Stale and ghost listings</td><td>A filter for reposted jobs</td></tr></table></div></div>
+  <div class="blk"><h3>OnlyHacks '26</h3><p>Planned an 8-day LinkedIn countdown in three voices (founder, authority, logistics) and a DM script for micro-influencers. Aim: fill the last 200 spots and reach the 512 builder cap. 300+ had registered when I wrote this.</p></div>
+  <div class="blk two"><figure class="fig"><img src="${IMG.ow1}" alt="OnlyWorks LinkedIn graphic: one of these got them rejected, one got them hired" loading="lazy"><figcaption>One of the LinkedIn graphics from the series.</figcaption></figure><figure class="fig"><img src="${IMG.ow2}" alt="Second OnlyWorks LinkedIn graphic" loading="lazy"></figure></div>`},
+
+{id:'neuralseek',g:'work',name:'NeuralSeek',role:'AI Agent Development Intern',when:'Jul to Sep 2025',place:'Remote',link:['neuralseek.com','https://neuralseek.com'],
+ learn:'Trust is the product',tag:'Market research, AI policy, benchmarking',
+ html:()=>`
+  <p class="one">I compared AI platforms and talked to users to work out where NeuralSeek could stand apart.</p>
+  ${stats([[5,'AI platforms benchmarked'],[7,'research reports put into one dataset'],[4,'user interviews'],[6,'strategy themes']])}
+  ${learned('Every person I interviewed brought up trust before features. People forgive a slow tool faster than one they can\'t check.')}
+  <div class="blk"><h3>Benchmark (1 to 5)</h3>
+   <p class="note">My own scores, from public docs, hands-on use and interviews. Not an official rubric.</p>
+   <div class="scroll-x"><table class="t"><tr><th>Platform</th><th>Accuracy</th><th>Transparency</th><th>Integration</th></tr>
+   <tr><td>ChatGPT</td><td>3</td><td>2</td><td>4</td></tr><tr><td>Gemini</td><td>4</td><td>3</td><td>5</td></tr><tr><td>Claude</td><td>4</td><td>4</td><td>5</td></tr>
+   <tr class="tg"><td>NeuralSeek (target)</td><td>5</td><td>5</td><td>4</td></tr></table></div>
+   <p style="margin-top:10px;font-size:14px;color:var(--ink-soft)">The last row is the position I recommended, not today's score.</p></div>
+  <div class="blk"><h3>What I recommended</h3>
+   <p><b>Show confidence.</b> All 4 interviewees named accuracy as their top worry. Put confidence scores and error flags on every answer.</p>
+   <p><b>Show sources.</b> The big chatbots don't always cite them. Make that the headline feature.</p></div>
+  <div class="blk"><h3>Data governance</h3><p>I joined user interviews and ethics discussions that shaped the team's guidelines on data governance and responsible AI.</p></div>`},
+
+{id:'ama',g:'school',name:'USF American Marketing Association',role:'Director of Professional Development',when:'Jul 2025 to May 2026',place:'Tampa, FL',link:['amausf.org','https://www.amausf.org'],
+ learn:'Show up, follow up',tag:'Partnerships, events, mentoring',
+ html:()=>`
+  <p class="one">I ran the professional development side of our chapter: corporate partners, events and mentoring.</p>
+  ${stats([[24,'corporate partners secured','+'],[45,'student members reached','+'],[30,'better coordination efficiency','%'],[6,'mentees, plus 3 shadowing programs']])}
+  ${learned('Most partnerships die in the follow-up email, not the first pitch. A calendar and a checklist did more than charm.')}
+  <div class="blk"><h3>What I did</h3><p>Brought in 24+ corporate partners for events. Kept the professional development calendar and event logistics on track. Started a 6-student mentorship and 3 shadowing programs, then tracked how members used them.</p><p>The chapter placed in the top 10 of 370+ collegiate chapters nationwide for 2025 to 2026.</p></div>
+  <div class="blk"><figure class="fig photo"><img src="${IMG.ama}" alt="USF AMA executive board at the International Collegiate Conference in Chicago" loading="lazy"></figure><p class="readout">USF AMA's executive board at the International Collegiate Conference, Chicago.</p></div>`},
+
+{id:'churn',g:'school',name:'European Telecom Churn',role:'Course project, AI & Analytics',when:'',place:'Python, Tableau, Excel',
+ learn:'Churn is a first-year problem',tag:'K-means, data cleaning, what-if modeling',
+ html:()=>`
+  <p class="one">Which telecom customers leave, and would a discount be worth it? I cleaned the data, grouped customers with K-means and built a what-if tool.</p>
+  ${stats([[7043,'customer records, 23 fields'],[1869,'customers churned'],[26.5,'overall churn rate','%'],[4,'risk segments from K-means']])}
+  ${learned('New customers on flexible contracts leave the most. Tech support tickets are the loudest warning sign.')}
+  ${chart('Churn by contract','Share of customers who left.',hb(CH_CONTRACT,{hot:0,max:50}))}
+  ${chart('Churn by months with the company','The first year is the danger zone.',hb(CH_TENURE,{hot:0,max:50}))}
+  ${chart('Churn by tech support tickets','Customers with even one tech ticket leave 3 times as often.',hb(CH_TECH,{hot:3,max:80}))}
+  ${chart('Churn by payment method','Electronic check payers leave far more than anyone else.',hb(CH_PAY,{hot:0,max:50}))}
+  <div class="slider"><h4>Would a discount pay off?</h4>
+   <p class="sub" style="margin:0">Group: month-to-month customers in their first 12 months. ${SEG.n.toLocaleString()} customers, ${SEG.churned.toLocaleString()} churned (51.4%). The discount goes to the ${(SEG.n-SEG.churned).toLocaleString()} still active. Plain arithmetic, no forecast.</p>
+   <label for="disc"><span>Discount</span><span id="disc-v">5%</span></label>
+   <input id="disc" type="range" min="1" max="10" step="1" value="5">
+   <div class="sl-out"><div><b id="o-cost">$0</b><span>monthly revenue given up</span></div><div><b id="o-save">0</b><span>churners you must keep to break even</span></div><div><b id="o-pct">0%</b><span>of that group's churners</span></div></div></div>
+  <div class="blk"><h3>Method</h3><ul class="tags"><li>Clean and fix types</li><li>Scale features</li><li>K-means, k = 4</li><li>Compare churn per group</li><li>Tableau what-if</li></ul>
+  <p class="note" style="margin-top:14px">The Tableau simulation estimates how modeled risk shifts. It doesn't prove a discount causes people to stay.</p></div>`},
+
+{id:'techkart',g:'school',name:'TechKart Database',role:'Course project, ISM4212',when:'',place:'MySQL',
+ learn:'Design it right before you query it',tag:'SQL, ERD, normalization',
+ html:()=>`
+  <p class="one">I designed a small online store database from scratch and wrote the queries a business would ask of it.</p>
+  ${stats([[4,'tables in third normal form'],[3,'foreign keys keeping it honest'],[4,'analysis queries']])}
+  ${learned('A clean schema makes the hard queries short. Most of my SQL bugs started as design bugs.')}
+  ${chart('Entity relationship diagram','One customer has many orders. Each order has many line items. Each line item points to one product.',`<div class="scroll-x">${erd()}</div>`)}
+  <div class="blk"><h3>Queries I wrote</h3><ul class="tags"><li>Multi-table joins</li><li>Window function: customer lifetime value rank</li><li>Correlated subquery: orders above a customer's own average</li><li>Best seller per category</li></ul></div>
+  <div class="blk"><h3>Best seller per category</h3><pre class="code">SELECT Category, ProductName, UnitsSold
+FROM (
+  SELECT p.Category, p.ProductName,
+         SUM(od.Quantity) AS UnitsSold,
+         RANK() OVER (PARTITION BY p.Category
+                      ORDER BY SUM(od.Quantity) DESC) AS rnk
+  FROM Product p
+  JOIN OrderDetail od ON od.ProductID = p.ProductID
+  GROUP BY p.Category, p.ProductName
+) ranked
+WHERE rnk = 1;</pre></div>`},
+
+{id:'kat',g:'school',name:'KAT Manufacturing',role:'Tableau dashboard project',when:'',place:'Tableau, Excel',
+ learn:'Read the whole trend',tag:'Tableau, revenue analysis, storytelling',
+ html:()=>`
+  <p class="one">Three years of sales for a laser and fiber optics maker. Where does the money come from, and is it growing?</p>
+  ${stats([[100.6,'total revenue, 2019 to 2021','M','$'],[67,'growth from 2019 to 2021','%','+'],[603,'customers with sales'],[6,'divisions']])}
+  ${learned('Seasonality looks obvious until you plot three years. Q3 led in 2019 and 2020, but 2021 peaked in Q4.')}
+  ${chart('Revenue by quarter ($M)','Orange marks the biggest quarter of each year. Revenue went from $25.9M to $31.3M to $43.4M.',colChart('katq',KAT_Q))}
+  ${chart('Revenue by category ($M)','Materials Processing is 47% of the total.',hb(KAT_CAT,{fmt:v=>'$'+v.toFixed(1)+'M',hot:0}))}
+  ${chart('Revenue by division ($M)','Germany and the US make up 80% of sales.',hb(KAT_DIV,{fmt:v=>'$'+v.toFixed(1)+'M',hot:0}))}
+  ${chart('Top 5 customers ($M)','Together about 16% of revenue. No single customer above 6.1%.',hb(KAT_CUST,{fmt:v=>'$'+v.toFixed(1)+'M',max:6.5,dim:[1,2,3,4]}))}`}
+];
+const byId=Object.fromEntries(P.map(p=>[p.id,p]));
+
+/* ---------- table of contents ---------- */
+P.forEach((p,i)=>{
+  const li=document.createElement('li');li.className='rv';li.style.setProperty('--d',(i%4)*.06+'s');
+  li.innerHTML=`<button type="button" data-id="${p.id}" aria-haspopup="dialog"><span class="nm">${p.name}<small>${[p.role,p.when].filter(Boolean).join(' &middot; ')}</small></span><span class="lr"><i>Learned</i>${p.learn}</span><span class="go">Open</span></button>`;
+  $('#toc-'+p.g).appendChild(li);
+});
+
+/* ---------- modal ---------- */
+const dlg=$('#dlg'),pj=$('#pj');let cur=null;
+function animate(root){
+  root.querySelectorAll('.bar').forEach(b=>requestAnimationFrame(()=>requestAnimationFrame(()=>b.style.width=b.dataset.w+'%')));
+  root.querySelectorAll('rect.b').forEach((r,i)=>setTimeout(()=>{r.setAttribute('y',r.dataset.y);r.setAttribute('height',r.dataset.h)},60+i*45));
+  root.querySelectorAll('[data-n]').forEach(el=>{
+    const end=parseFloat(el.dataset.n),dec=String(el.dataset.n).includes('.')?1:0,s=el.dataset.s||'',pre=el.dataset.p||'';
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let t0=null;
+    const step=t=>{t0=t0||t;const k=reduce?1:Math.min(1,(t-t0)/1100),e=1-Math.pow(1-k,3);
+      el.textContent=pre+(end*e).toLocaleString(undefined,{minimumFractionDigits:dec,maximumFractionDigits:dec})+s;if(k<1)requestAnimationFrame(step)};
+    requestAnimationFrame(step);
+  });
+  const q=root.querySelector('#katq');
+  if(q)q.querySelectorAll('rect.b').forEach(r=>{const f=()=>root.querySelector('#katq-r').innerHTML='<b>'+r.dataset.t+'</b>';r.addEventListener('mouseenter',f);r.addEventListener('focus',f)});
+  const d=root.querySelector('#disc');
+  if(d){const f=()=>{const x=+d.value/100;const cost=x*SEG.activeMonthly,gain=SEG.churnerAvg*(1-x),need=Math.ceil(cost/gain);
+    $('#disc-v').textContent=d.value+'%';$('#o-cost').textContent='$'+Math.round(cost).toLocaleString();$('#o-save').textContent=need.toLocaleString();$('#o-pct').textContent=(need/SEG.churned*100).toFixed(1)+'%'};
+    d.addEventListener('input',f);f()}
+}
+function render(id,push){
+  const p=byId[id];if(!p)return;cur=id;
+  const i=P.indexOf(p),prev=P[(i+P.length-1)%P.length],next=P[(i+1)%P.length];
+  pj.innerHTML=`<div class="pj-bar"><span>${i+1} of ${P.length}</span><button type="button" id="x">Close</button></div>
+   <h2>${p.name}</h2><div class="role">${[p.role,p.when,p.place].filter(Boolean).join(' &middot; ')}${p.link?` &middot; <a href="${p.link[1]}" target="_blank" rel="noopener">${p.link[0]}</a>`:''}</div>
+   ${p.html()}
+   <div class="pj-nav"><button type="button" data-id="${prev.id}">&larr; ${prev.name}</button><button type="button" data-id="${next.id}">${next.name} &rarr;</button></div>`;
+  dlg.scrollTop=0;animate(pj);
+  if(push!==false){try{history.replaceState(null,'','#'+id)}catch(e){}}
+}
+function open(id){render(id);if(!dlg.open)dlg.showModal();$('#x').focus({preventScroll:true})}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-id]');
+  if(b&&b.closest('.toc')){open(b.dataset.id)}
+  else if(b&&b.closest('.pj-nav')){render(b.dataset.id)}
+  else if(e.target.id==='x'){dlg.close()}
+  else if(e.target===dlg){dlg.close()}
+});
+dlg.addEventListener('close',()=>{try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}});
+if(location.hash&&byId[location.hash.slice(1)])open(location.hash.slice(1));
+
+/* pull the dash next to the squeezed caps */
+const fit=()=>document.querySelectorAll('.sec-head .tall,.h-pair .tall').forEach(t=>{t.style.marginRight='0px';t.style.marginRight=(-t.offsetWidth*.2)+'px'});
+fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+/* ---------- scroll reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll('.rv').forEach(el=>{if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in')}),1200);
+</script>
+
+</html>
